@@ -1,0 +1,78 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    background-image: url(img/fondo.jpg);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    /* Evita que la imagen de fondo se repita */
+    backdrop-filter: blur(10px);
+    margin: 0;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.imgasistente {
+    width: 70vh;
+}
+
+.texto-titulo {
+    -webkit-text-stroke: 1px black;
+    font-size: 6vh;
+    color: white;
+    text-shadow:
+        3px 3px 0 #000,
+        -1px -1px 0 #000,
+        1px -1px 0 #000,
+        -1px 1px 0 #000,
+        1px 1px 0 #000;
+}
+
+
+#text {
+    color: aquamarine;
+    overflow: auto;
+}
+
+.btn-record {
+    border: none;
+    padding: 20px;
+    border-radius: 50%;
+    width: 90px;
+    height: 90px;
+}
+
+.btn-record-green {
+    background-color: #03f42b;
+}
+
+.btn-record-red {
+    background-color: #dc3545;
+}
+
+.btn-record img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.record-spinner {
+    color: white;
+    width: 30px;
+    height: 30px
+}
+
+.mic-img {
+    width: 30px;
+}

@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asistente Virtual</title>
+    <link rel="icon" type="image/x-icon" href="../static/img/iconpage.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="static/estilos.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="row align-items-center">
+                <div class="col-md-7 text-center">
+                    <img class="imgasistente" src="static/img/botassistant.png" alt="Asistente Imagen">
+                </div>
+                <div class="col-md-5 text-center">
+                    <h1 class="texto-titulo fw-bold">Asistente Virtual <br> con API</h1>
+                </div>
+            </div>
+            <div class="col-12 text-center">
+                <div class="row mt-3">
+                    <div class="col">
+                        <button type="button" class="btn-record btn-record-green" id="record" onclick="empezarGrabacion()">
+                            <img class="mic-img" src="static/img/microfono.png" alt="Microfono">
+                        </button>
+                        <button type="button" class="btn-record btn-record-red" id="stop" onclick="detenerGrabacion()"
+                            style="display:none">
+                            <img class="mic-img" id="record-stop-label" src="static/img/microfono.png" alt="Microfono">
+                            <span id="record-stop-loading" style="display: none"><span
+                                    class="spinner-border spinner-border-sm record-spinner" role="status"
+                                    aria-hidden="true"></span></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 text-center mt-2" style="overflow-y: auto; max-height: 200px;">
+                <div id="text"></div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+    integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+    crossorigin="anonymous"></script>
+<script src="../static/grabador.js"></script>
+
+<script type="text/javascript">
+    function mostrarRespuesta(textoRespuesta) {
+        const divRespuesta = document.getElementById('text');
+        divRespuesta.innerText = textoRespuesta;
+    }
+
+    function manejarRespuestaAudio(respuesta) {
+        mostrarRespuesta(respuesta.texto);
+        if (typeof respuesta.archivo !== "undefined") {
+            let audio = new Audio(respuesta.archivo);
+            audio.play();
+        }
+    }
+
+    function grabador(url, callback) {
+        let mediaRecorder;
+        let audioChunks = [];
+
+        function empezarGrabacion() {
+            navigator.mediaDevices.getUserMedia({ audio: true })
+                .then(stream => {
+                    mediaRecorder = new MediaRecorder(stream);
+                    mediaRecorder.start();
+
+                    mediaRecorder.addEventListener("dataavailable", event => {
+                        audioChunks.push(event.data);
+                    });
+
+                    mediaRecorder.addEventListener("stop", () => {
+                        const audioBlob = new Blob(audioChunks);
+                        const formData = new FormData();
+                        formData.append('audio', audioBlob);
+
+                        fetch(url, {
+                            method: 'POST',
+                            body: formData
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            callback(data);
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                    });
+
+                    setTimeout(() => {
+                        mediaRecorder.stop();
+                    }, 3000); // Grabación de 3 segundos
+                });
+        }
+
+        function detenerGrabacion() {
+            mediaRecorder.stop();
+        }
+
+        return {
+            empezarGrabacion,
+            detenerGrabacion
+        };
+    }
+
+    const grabadorInstancia = grabador("/audio", manejarRespuestaAudio);
+
+    function empezarGrabacion() {
+        document.getElementById("record").style.display = "none";
+        document.getElementById("stop").style.display = "";
+        grabadorInstancia.empezarGrabacion();
+    }
+
+    function detenerGrabacion() {
+        document.getElementById("record").style.display = "";
+        document.getElementById("stop").style.display = "none";
+        grabadorInstancia.detenerGrabacion();
+    }
+</script>
+
+</html>

@@ -1,0 +1,107 @@
+# Ignorar archivos multimedia
+*.mp3
+
+# Ignorar archivos compilados de Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Ignorar extensiones y librerías C
+*.so
+
+# Ignorar directorios de construcción y empaquetado
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Ignorar PyInstaller
+*.manifest
+*.spec
+
+# Ignorar logs de instalación
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Ignorar reportes de pruebas y cobertura
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Ignorar archivos de traducción
+*.mo
+*.pot
+
+# Ignorar configuraciones específicas de Django
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Ignorar configuraciones y caché de Flask
+instance/
+.webassets-cache
+
+# Ignorar caché de Scrapy
+.scrapy
+
+# Ignorar archivos generados por Sphinx
+docs/_build/
+
+# Ignorar PyBuilder
+.pybuilder/
+target/
+
+# Ignorar checkpoints de Jupyter Notebook
+.ipynb_checkpoints
+
+# Ignorar configuraciones y caché de IPython
+profile_default/
+ipython_config.py
+
+# Ignorar versiones de pyenv y configuraciones de pipenv
+# .python-version
+
+# Ignorar entornos virtuales
+myenv/
+.env
+.venv/
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Ignorar configuraciones de Spyder y Rope
+.spyderproject
+.spyproject
+.ropeproject
+
+# Ignorar documentación generada por mkdocs
+/site
+
+# Ig
