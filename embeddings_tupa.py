@@ -28,3 +28,6 @@ ruta_pdf = 'pdftupa/TUPA Procedimientos Administrativos.pdf'
 texto_pdf = extraer_texto_pdf(ruta_pdf)
 embeddings_pdf = crear_embeddings(texto_pdf)
 guardar_embeddings(embeddings_pdf, [texto_pdf], 'embeddings_pdf.pkl')
+
+
+# TTT
